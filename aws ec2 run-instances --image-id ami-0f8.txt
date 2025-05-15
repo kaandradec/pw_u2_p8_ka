@@ -1,0 +1,1 @@
+aws ec2 run-instances --image-id ami-0f88e80871fd81e91 --count 2 --instance-type t2.micro --key-name ClavesDeberDiscos --security-group-ids sg-028dfe3df8b568216 --subnet-id subnet-0806912ddd5355f0f --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value=MiInstanciaDesdeCLI}]'
