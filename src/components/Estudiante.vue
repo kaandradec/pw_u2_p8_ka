@@ -12,8 +12,23 @@
 
     <label for="id_apellido">Apellido: </label>
     <input v-model="nuevoApellido" id="id_apellido" type="text" />
+
+    <label for="id_edad">Edad: </label>
+    <input v-model="nuevaEdad" id="id_edad" type="number" />
+
+    <label for="id_matriculado">Matriculado: </label>
+    <input v-model="estaMatriculado" id="id_matriculado" type="checkbox" />
+
+    <label for="id_promedio">Promedio Académico: </label>
+    <input v-model="nuevoPromedioAcademico" id="id_promedio" type="number" />
+
     <button v-on:click="agregarEstudiante()">Agregar Estudiante</button>
-    {{ nuevoNombre }}
+    {{
+      `${nuevoNombre} ${nuevoApellido} ${nuevaEdad} ${estaMatriculado} ${nuevoPromedioAcademico}`
+    }}
+
+    <div class="spacer"></div>
+
     <ul>
       <!-- v-for Directiva para y graficar componentes a partir de un arreglo o una lista -->
       <!-- <li v-for="estu in lista" :key="estu.nombre">
@@ -21,8 +36,19 @@
       </li> -->
 
       <!-- Con desestructuración de objetos -->
-      <li v-for="{ nombre, apellido } in lista" :key="nombre">
-        Nombre: {{ nombre }} - Apellido: {{ apellido }}
+      <li
+        v-for="{
+          nombre,
+          apellido,
+          edad,
+          matriculado,
+          promedioAcademico,
+        } in lista"
+        :key="nombre"
+      >
+        Nombre: {{ nombre }} - Apellido: {{ apellido }} - Edad: {{ edad }} -
+        Matriculado: {{ matriculado ? "Sí" : "No" }} - Promedio Académico:
+        {{ promedioAcademico }}
       </li>
     </ul>
   </div>
@@ -34,13 +60,52 @@ export default {
     return {
       nuevoNombre: "Nuevo",
       nuevoApellido: "Nuevo Apellido",
+      nuevaEdad: 22,
+      estaMatriculado: false,
+      nuevoPromedioAcademico: 16.0,
       lista: [
-        { nombre: "Kevin", apellido: "Andrade" },
-        { nombre: "Daniel", apellido: "Vera" },
-        { nombre: "Pedro", apellido: "Sanchez" },
-        { nombre: "Jorge", apellido: "Teran" },
-        { nombre: "Carlos", apellido: "Castillo" },
-        { nombre: "Viviana", apellido: "Lopez" },
+        {
+          nombre: "Kevin",
+          apellido: "Andrade",
+          edad: 22,
+          matriculado: false,
+          promedioAcademico: 16.86,
+        },
+        {
+          nombre: "Daniel",
+          apellido: "Vera",
+          edad: 23,
+          matriculado: true,
+          promedioAcademico: 16.65,
+        },
+        {
+          nombre: "Pedro",
+          apellido: "Sanchez",
+          edad: 26,
+          matriculado: false,
+          promedioAcademico: 15.0,
+        },
+        {
+          nombre: "Jorge",
+          apellido: "Teran",
+          edad: 25,
+          matriculado: false,
+          promedioAcademico: 17.2,
+        },
+        {
+          nombre: "Carlos",
+          apellido: "Castillo",
+          edad: 23,
+          matriculado: true,
+          promedioAcademico: 15.12,
+        },
+        {
+          nombre: "Viviana",
+          apellido: "Lopez",
+          edad: 24,
+          matriculado: false,
+          promedioAcademico: 14.23,
+        },
       ],
     };
   },
@@ -49,6 +114,9 @@ export default {
       const nuevoEst = {
         nombre: this.nuevoNombre,
         apellido: this.nuevoApellido,
+        edad: this.nuevaEdad,
+        matriculado: this.estaMatriculado,
+        promedioAcademico: this.nuevoPromedioAcademico,
       };
       //   this.lista.unshift(nuevoEst);
       this.lista.push(nuevoEst);
@@ -58,4 +126,15 @@ export default {
 </script>
 
 <style>
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.spacer {
+  height: 16px;
+  border-top: 1px solid black;
+  width: 100%;
+}
 </style>
