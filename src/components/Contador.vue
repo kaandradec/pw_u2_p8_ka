@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h1>Contador</h1>
+    <h1>{{ this.title }}</h1>
 
     <p>{{ 10 }}</p>
     <!-- Muestra el número literal 10 -->
@@ -30,10 +30,36 @@
 <script>
 export default {
   // Función data(): define el estado reactivo del componente
+
+  // FORMA 1
+  // props: ["title", "value"],
+  //FORMA 2
+  props: {
+    title: String,
+    // value: Number,
+    value: {
+      // Podemos ser mas específicos en la descripción del prop
+      type: Number,
+      required: false,
+      default: 100, // Cuando required == false podemos definir un valor por defecto
+      validator(value) {
+        // Por cada prop podemos crear una validación personalizada
+        return value > 0;
+      },
+    },
+    p1: Boolean,
+    p2: Array,
+    p3: Object,
+    p4: Function,
+    p5: Date,
+    p6: Symbol, //Usado para enviar tokens
+  },
+
   data() {
     return {
-      numero: 5, // Valor inicial del contador
+      numero: this.value, // Valor inicial del contador
       texto: "Kevin Andrade", // Ejemplo de dato tipo string
+      titulo: "Contador",
       activo: true, // Ejemplo de dato booleano
       usuario: {
         // Objeto anidado con varias propiedades
@@ -64,6 +90,10 @@ export default {
       // Solo se recalcula cuando “numero” cambie; resultado cacheado
       return this.numero * this.numero;
     },
+  },
+  created() {
+    if (this.value > 0) console.log("Es correcto");
+    else throw new Error("Error: El valor no puede ser menor que cero '0'");
   },
 };
 </script>
