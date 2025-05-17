@@ -1,5 +1,9 @@
 <template>
   <div class="container">
+    <div v-show="mostrar">
+      <h1>Estudiante Guardado</h1>
+    </div>
+
     <label for="id_nombre">Nombre: </label>
     <!-- v-model: Vincular una entrada a una propiedad reactiva  -->
     <!-- Usa el patrón  de diseño modelo vista controlador -->
@@ -24,28 +28,35 @@
 
     <button v-on:click="agregarEstudiante()">Agregar</button>
 
-    <ul>
-      <!-- v-for Directiva para y graficar componentes a partir de un arreglo o una lista -->
-      <!-- <li v-for="estu in lista" :key="estu.nombre">
-        Nombre: {{ estu.nombre }} - Apellido: {{ estu.apellido }}
-      </li> -->
-
-      <!-- Con desestructuración de objetos -->
-      <li
-        v-for="{
-          nombre,
-          apellido,
-          edad,
-          matriculado,
-          promedioAcademico,
-        } in lista"
-        :key="nombre"
-      >
-        Nombre: {{ nombre }} - Apellido: {{ apellido }} - Edad: {{ edad }} -
-        Matriculado: {{ matriculado ? "Sí" : "No" }} - Promedio Académico:
-        {{ promedioAcademico }}
-      </li>
-    </ul>
+    <table>
+      <thead>
+        <th>Nombre</th>
+        <th>Apellido</th>
+        <th>Edad</th>
+        <th>Matriculado</th>
+        <th>Promedio Académico</th>
+        <th>Acción</th>
+      </thead>
+      <tbody>
+        <tr
+          v-for="{
+            nombre,
+            apellido,
+            edad,
+            matriculado,
+            promedioAcademico,
+          } in lista"
+          :key="nombre"
+        >
+          <td>{{ nombre }}</td>
+          <td>{{ apellido }}</td>
+          <td>{{ edad }}</td>
+          <td>{{ matriculado ? "Si" : "No" }}</td>
+          <td>{{ promedioAcademico }}</td>
+          <td><button>Ver</button></td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </template>
 
@@ -102,6 +113,7 @@ export default {
           promedioAcademico: 14.23,
         },
       ],
+      mostrar: false,
     };
   },
   methods: {
@@ -115,6 +127,13 @@ export default {
       };
       //   this.lista.unshift(nuevoEst);
       this.lista.push(nuevoEst);
+
+      this.mostrar = true;
+      this.nombre = null;
+
+      setTimeout(() => {
+        this.mostrar = false;
+      }, 1500);
     },
   },
 };
@@ -170,7 +189,7 @@ button:active {
   background-color: aliceblue;
 }
 
-ul{
+ul {
   list-style: none;
   margin-top: 48px;
 }
@@ -184,4 +203,75 @@ li {
   box-shadow: 0px 1px 2px;
 }
 
+table {
+  border: 1px solid black;
+  border-radius: 8px;
+  margin: 0 auto;
+  background-color: azure;
+  border-spacing: 0;
+  overflow: hidden;
+
+  margin-top: 48px;
+}
+
+th {
+  border-bottom: 1px solid black;
+  background-color: rgb(121, 197, 197);
+}
+
+td > button {
+  width: fit-content;
+  background-color: bisque;
+}
+
+tbody tr:hover {
+  background-color: #eef3f9;
+}
+
+td,
+th {
+  padding: 4px 8px;
+}
+
+/* table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 0.95rem;
+  background-color: #fff;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+  border-radius: 8px;
+  overflow: hidden;
+}
+ 
+thead {
+  background-color: #f4f6f8;
+}
+ 
+thead th {
+  text-align: left;
+  padding: 15px;
+  color: #333;
+  font-weight: 600;
+  border-bottom: 2px solid #e3e6ea;
+}
+ 
+tbody tr {
+  transition: background-color 0.2s;
+}
+ 
+tbody tr:nth-child(even) {
+  background-color: #f9fafb;
+}
+ 
+tbody tr:hover {
+  background-color: #eef3f9;
+}
+ 
+tbody td {
+  padding: 15px;
+  border-bottom: 1px solid #e3e6ea;
+  color: #444;
+} */
 </style>
