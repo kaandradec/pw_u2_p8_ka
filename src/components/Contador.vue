@@ -98,7 +98,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 h1 {
   color: rgb(128, 235, 128);
   background: rgb(83, 83, 238);
