@@ -28,6 +28,7 @@
 </template>
 
 <script>
+import { ref, computed, reactive, onMounted } from "vue";
 export default {
   // Función data(): define el estado reactivo del componente
 

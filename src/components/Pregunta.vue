@@ -1,10 +1,12 @@
 <template>
   <div class="container">
-    <img
+    <!-- <img
       src="https://yesno.wtf/assets/no/19-2062f4c91189b1f88a9e809c10a5b0f0.gif
  "
       alt="No se pudo cargar"
-    />
+    /> -->
+    <img v-if="imagen" :src="imagen" alt="No hubo ese placeholder" srcset="" />
+
     <div class="container-2"></div>
     <div class="pregunta-container">
       <input v-model="pregunta" type="text" placeholder="Hazme una pregunta" />
@@ -16,21 +18,44 @@
 </template>
 
 <script>
+import { consultarFachada } from "@/clients/YesNoClient";
+
 export default {
   data() {
     return {
       pregunta: null,
       respuesta: null,
+      imagen: null,
+      esValida: null,
     };
   },
   watch: {
     // Método con el mismo nombre de la propiedad reactiva
     pregunta(value, oldValue) {
-      console.log(`Valor actual: ${value}\n Valor anterior: ${oldValue}`);
+      // console.log(`Valor actual: ${value}\n Valor anterior: ${oldValue}`);
+
+      this.esValida = false;
+
+      if (value.endsWith("?")) {
+        console.log("Actual: " + value);
+        console.log("Old: " + oldValue);
+        console.log(this.consumirAPI());
+      }
     },
   },
 
-  methods: {},
+  methods: {
+    async consumirAPI() {
+      const resp = await consultarFachada();
+
+      console.log(resp);
+      console.log(resp.image);
+      console.log(resp.test);
+      console.log(resp.forced);
+      this.respuesta = resp.answer;
+      this.imagen = resp.image;
+    },
+  },
 };
 </script>
 
